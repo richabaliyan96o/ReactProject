@@ -1,0 +1,13 @@
+.todo-app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 90px;
+}
+
+.todo-input-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
