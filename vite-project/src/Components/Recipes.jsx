@@ -12,20 +12,20 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 
-const Recipes = () => {
+const Recipes = ({ userId }) => {
   const [recipe, setRecipe] = useState([]);
  const navigate = useNavigate();
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const data = await fetchRecipes();
+        const data = await fetchRecipes(userId);
         setRecipe(data.recipes);
       } catch (error) {
         console.error('Error fetching recipe:', error);
       }
     };
     fetchRecipe();
-  }, []);
+  }, [userId]);
 
   const handleDetails = (item,index) => {
      navigate(`/recipes/${index}`, {

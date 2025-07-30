@@ -40,7 +40,7 @@ const UserRecipe = () => {
       </Card>
 
       {/* Recipes Section */}
-      <Recipes />
+      <Recipes userId={article.id} />
     </Box>
   );
 };

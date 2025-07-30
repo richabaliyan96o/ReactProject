@@ -14,7 +14,7 @@ const UserGrid = () => {
   const navigate = useNavigate();
   const[totalResult , setTotalResult] =  useState();
   const totalPages = Math.ceil(totalResult / limit);
-  const [viewedCards, setViewedCards] = useState(new Set());
+  const [viewedCards, setViewedCards] = useState([]);
   const[progress,setProgress] = useState(0);
  
 
@@ -37,15 +37,29 @@ const UserGrid = () => {
   }, [page]);
 
 useEffect(() => {
+  console.log('Viewed Cards:', viewedCards);
   if (totalResult) {
-    const progressValue = (viewedCards.size / totalResult) * 100;
+    const progressValue = (viewedCards.length / totalResult) * 100;
     setProgress(progressValue);
+    console.log(`Progress: ${progressValue}%`);
   }
-}, [viewedCards]);
+}, [viewedCards , totalResult]);
+
+useEffect(() => {
+  const stored = localStorage.getItem('viewedCards');
+  if (stored) {
+    setViewedCards(JSON.parse(stored));
+  }
+}, []);
 
 
 const handleCardClick = (item, index) => {
-  setViewedCards(prev => new Set([...prev, item.id]));
+
+  if (!viewedCards.includes(item.id)) {
+    const updated = [...viewedCards, item.id];
+    setViewedCards(updated);
+    localStorage.setItem('viewedCards', JSON.stringify(updated));
+  }
   localStorage.setItem('lastView', 'grid');
   navigate(`/user/${index}`, {
     state: {
